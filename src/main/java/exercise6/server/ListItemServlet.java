@@ -6,14 +6,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import mysql.jdbc.JDBCManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 
 public class ListItemServlet extends HttpServlet {
 
-    private static final Logger logger = LoggerFactory.getLogger(ListItemServlet.class);
     private final JDBCManager jdbcManager;
 
     public ListItemServlet(JDBCManager jdbcManager) {
@@ -23,16 +19,12 @@ public class ListItemServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.setContentType("text/html");
-        resp.getWriter().write("Here are the books at path: " + req.getPathInfo());
-
         //Use DB instead to find item
-        int allItems = jdbcManager.countAllEntriesInDatabase();
-
+        int entries = jdbcManager.countAllEntriesInDatabase();
 
         //Lecture 6 - JSON
         JsonArrayBuilder result = Json.createArrayBuilder();
-        for (int i = 1; i <= allItems; i++) {
+        for (int i = 1; i <= entries; i++) {
             Item tempItem = jdbcManager.getItemFromDatabase(i);
 
             result.add(Json.createObjectBuilder()
@@ -41,20 +33,6 @@ public class ListItemServlet extends HttpServlet {
                     .add("category", tempItem.getCategory())
             );
         }
-
-        if ("application/json".equals(req.getHeader("Accept"))) {
-            resp.getWriter().write(result.build().toString());
-        } else {
-            resp.getWriter().write("<ul>");
-            for (int i = 1; i <= allItems; i++) {
-                Item tempItem = jdbcManager.getItemFromDatabase(i);
-
-                resp.getWriter().write("<li>" + tempItem + "</li>");
-                resp.getWriter().write("<hr>");
-            }
-            resp.getWriter().write("</ul>");
-        }
-
-        logger.info("Should list all items");
+        resp.getWriter().write(result.build().toString());
     }
 }

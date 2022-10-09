@@ -6,7 +6,7 @@
 * [x] Fetch JSON from React to Servlet
 
 #### New with Exercise 6:
-* [ ] React application with vite
+* [x] React application with vite
 * [ ] Framework support with JAX-RS
   * [ ] Build GET-request
   * [ ] Build POST-request

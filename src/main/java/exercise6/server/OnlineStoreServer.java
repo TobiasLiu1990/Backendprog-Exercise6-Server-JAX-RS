@@ -9,54 +9,58 @@ import org.eclipse.jetty.webapp.WebAppContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 public class OnlineStoreServer {
 
-    private final Server server = new Server(8080);
+    private final Server server;
     private final Logger logger = LoggerFactory.getLogger(OnlineStoreServer.class);
     private final JDBCManager jdbcManager = new JDBCManager();
 
-
-    public OnlineStoreServer() throws Exception {
-        startServer();
+    public OnlineStoreServer(int port) throws Exception {
+        this.server = new Server(port);
+        server.setHandler(createWebApp());
     }
 
-    public void startServer() throws Exception {
-        //Instantiate a WebAbbContext to set a path to where to work from. Refers to target/classes by default.
-        var targetResource = Resource.newClassPathResource("/webapp");
-        var webApp = new WebAppContext(targetResource, "/");
 
+    private WebAppContext createWebApp() throws Exception {
+        WebAppContext webContext = new WebAppContext();
+        webContext.setContextPath("/");
 
-        //Sets a different path to work from: src/main/resources.
-        var sourceResources = Resource.newResource(targetResource.getFile().toString()
+        var resources = Resource.newClassPathResource("/webapp");
+        var sourceDirectory = new File(resources.getFile()
+                .getAbsoluteFile()
+                .toString()
                 .replace("target\\classes", "src\\main\\resources")
         );
-        if (sourceResources.exists()) {
-            webApp.setBaseResource(sourceResources);    // Change the default path to src/main/resources, if exist.
-            webApp.setInitParameter(DefaultServlet.CONTEXT_INIT + "useFileMappedBuffer", "false");  //To avoid Jetty to lock files for changes.
+
+        if (sourceDirectory.isDirectory()) {
+            webContext.setBaseResource(Resource.newResource(sourceDirectory));    // Change the default path to src/main/resources, if exist.
+            webContext.setInitParameter(DefaultServlet.CONTEXT_INIT + "useFileMappedBuffer", "false");  //To avoid Jetty to lock files for changes.
+        } else {
+            webContext.setBaseResource(resources);
         }
 
+        webContext.addServlet(new ServletHolder(new AddItemServlet(jdbcManager)), "/api/addItem");
+        webContext.addServlet(new ServletHolder(new ListItemServlet(jdbcManager)), "/api/listItems/*");
 
-        //Adding Servlet - To handle the actual page.
-        var addItemServlet = new ServletHolder(new AddItemServlet(jdbcManager)); //Send itemRepository to AddItemServlet to save inputs
-        webApp.addServlet(addItemServlet, "/api/addItem");
-        //Adding Servlet - To handle listing all items.
-        var listItemServlet = new ServletHolder(new ListItemServlet(jdbcManager));
-        webApp.addServlet(listItemServlet, "/api/listItems/*");
-
-        //JSP
-//        webApp.addServletContainerInitializer(new JettyJasperInitializer());    //Sets so all .jsp files are handled by jetty
-
-
-        server.setHandler(webApp);
-
-
-        server.start();
         logger.info("Server started on {}", server.getURI());
+        return webContext;
+    }
+
+    public URL getURL() throws MalformedURLException {
+        return server.getURI().toURL();
+    }
+
+    public void start() throws Exception {
+        server.start();
     }
 
     public static void main(String[] args) throws Exception {
-        var server = new OnlineStoreServer();
-
+        var server = new OnlineStoreServer(8080);
+        server.start();
+        System.out.println(server.getURL());
     }
-
 }

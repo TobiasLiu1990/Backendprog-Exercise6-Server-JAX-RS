@@ -1,6 +1,5 @@
 package exercise6.server;
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -8,7 +7,6 @@ import mysql.jdbc.JDBCManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 
 public class AddItemServlet extends HttpServlet {
 
@@ -20,7 +18,7 @@ public class AddItemServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         //Get input from web
         String itemName = req.getParameter("itemName");
         int itemPrice = Integer.parseInt(req.getParameter("itemPrice"));
