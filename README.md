@@ -11,12 +11,8 @@
   * [ ] Build GET-request
   * [ ] Build POST-request
 
-
-To handle JSON: 
-- jakarta.json-api
-- parsson
-
-
+  
+### React application with vite
 #### Vite - alternative instead of parcel.
 * Vite a little easier with debugging
 * vite.config.js used more than package.json in parcel.
@@ -43,9 +39,6 @@ To get the frontend part to work with the backend (resource folder)
 package.json: Now Vite builds instead of running on its own on its port.
 --watch makes it continue to build.
 vite.config.js: Changed output directory to resources/webapp
-
-Now the library-frontend folder is connected to the webapp on backend (index.html in here is used now)
-
 * Now backend - frontend is connected
     * Fetch JSON with react
 

@@ -1,3 +1,5 @@
 /.idea/
 /Ex6.iml
 /src/main/java/mysql/jdbc/LoginDB.java
+/src/main/resources/
+/target/
