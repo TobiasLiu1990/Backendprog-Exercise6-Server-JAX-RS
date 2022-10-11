@@ -5,15 +5,11 @@ import {useEffect, useState} from "react";
 function ItemList() {
     const [loading, setLoading] = useState(true);
     const [item, setItem] = useState([]);
-    const [price, setPrice] = useState([]);
-    const [category, setCategory] = useState([]);
 
     useEffect(() => {
         (async () => {
             const res = await fetch("/api/listItems");
             setItem(await res.json());
-            setPrice(await res.json());
-            setCategory(await res.json());
             setLoading(false);
         })();
     }, [])
@@ -21,7 +17,7 @@ function ItemList() {
     if (loading) {
         return <div>Loading... </div>
     }
-    return <ul>{item.map(i => <div>{i.name}</div>)}</ul>;
+    return <ul>{item.map(i => <div>{i.name} - {i.price} - {i.category}</div>)}</ul>;
 }
 
 function App() {

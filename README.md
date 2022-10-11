@@ -46,7 +46,7 @@ vite.config.js: Changed output directory to resources/webapp
 #### Now to do JAX-RS
 - Create a jerseyServlet.
 
-Need to add depencendy:
+Need to add dependency:
 - jersey-container-servlet
 - jersey-hk2
 * Use same version on these!
