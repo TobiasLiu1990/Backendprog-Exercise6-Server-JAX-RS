@@ -4,10 +4,7 @@ import jakarta.inject.Inject;
 import jakarta.json.Json;
 import jakarta.json.JsonArrayBuilder;
 import jakarta.json.JsonObject;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import mysql.jdbc.JDBCManager;
@@ -21,7 +18,7 @@ public class ItemEndPoint {
     private final JDBCManager jdbcManager = new JDBCManager();
 
     @GET
-
+    @Produces(MediaType.APPLICATION_JSON)
     public Response listItems() {
         JsonArrayBuilder result = Json.createArrayBuilder();
         int entries = jdbcManager.countAllEntriesInDatabase();
@@ -39,6 +36,7 @@ public class ItemEndPoint {
     }
 
     @POST
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response addItem(String body) {
         System.out.println(body);
         JsonObject jsonItem = Json.createReader(new StringReader(body)).readObject();
