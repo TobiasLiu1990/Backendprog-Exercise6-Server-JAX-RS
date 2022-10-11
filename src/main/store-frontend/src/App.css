@@ -5,6 +5,13 @@
   text-align: center;
 }
 
+label {
+  display: inline-block;
+  width: 2em;
+  text-align: right;
+  margin-right: 2.5em;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;

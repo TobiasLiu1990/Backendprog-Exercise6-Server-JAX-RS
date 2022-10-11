@@ -34,7 +34,8 @@ public class ItemEndPoint {
     }
 
     @POST
-    public Response addItem() {
+    public String addItem() {
+        System.out.println("beep boop");
         return null;
     }
 }

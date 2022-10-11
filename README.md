@@ -53,6 +53,9 @@ Need to add dependency:
 
 After creating a servlet for jersey/JAX-RS, need to create an endpoint
 - Made a new java class called ItemEndPoint
+  - Add a @Path
+  - Add a @GET
+  - Add a @POST
 
 
 
