@@ -8,7 +8,7 @@ function ItemList() {
 
     useEffect(() => {
         (async () => {
-            const res = await fetch("/api/listItems");
+            const res = await fetch("/api/items");
             setItem(await res.json());
             setLoading(false);
         })();

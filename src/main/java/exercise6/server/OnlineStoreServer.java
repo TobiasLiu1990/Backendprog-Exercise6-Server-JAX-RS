@@ -6,6 +6,7 @@ import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.webapp.WebAppContext;
+import org.glassfish.jersey.servlet.ServletContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,8 +33,14 @@ public class OnlineStoreServer {
 
         setSourceDirectory(webContext);
 
-        webContext.addServlet(new ServletHolder(new AddItemServlet(jdbcManager)), "/api/addItem");
-        webContext.addServlet(new ServletHolder(new ListItemServlet(jdbcManager)), "/api/listItems/*");
+        //Set up JAX-RS (jerseyServlet)
+        var jerseyServlet = webContext.addServlet(ServletContainer.class, "/api/*");
+        //Tell jersey where to look - in jersey specific packages - local packages
+        jerseyServlet.setInitParameter("jersey.config.server.provider.packages", "exercise6.server");
+
+
+//        webContext.addServlet(new ServletHolder(new AddItemServlet(jdbcManager)), "/api/addItem");
+//        webContext.addServlet(new ServletHolder(new ListItemServlet(jdbcManager)), "/api/listItems/*");
 
         logger.info("Server started on {}", server.getURI());
         return webContext;

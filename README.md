@@ -50,3 +50,19 @@ Need to add dependency:
 - jersey-container-servlet
 - jersey-hk2
 * Use same version on these!
+
+After creating a servlet for jersey/JAX-RS, need to create an endpoint
+- Made a new java class called ItemEndPoint
+
+
+
+
+
+
+
+
+
+
+
+
+
