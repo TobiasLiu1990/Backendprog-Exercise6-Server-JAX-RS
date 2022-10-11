@@ -2,9 +2,13 @@ package exercise6.server;
 
 public class Item {
 
-    private final String name;
-    private final int price;
-    private final String category;
+    private String name;
+    private int price;
+    private String category;
+
+    public Item() {
+        //
+    }
 
     public Item(String name, int price, String category) {
         this.name = name;
@@ -12,17 +16,28 @@ public class Item {
         this.category = category;
     }
 
-
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getPrice() {
         return price;
     }
 
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
     public String getCategory() {
         return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     @Override
