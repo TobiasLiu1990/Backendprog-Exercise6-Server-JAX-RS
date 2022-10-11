@@ -2,7 +2,7 @@ package exercise6.server;
 
 public class Item {
 
-    private String name;
+    private String itemName;
     private int price;
     private String category;
 
@@ -10,18 +10,18 @@ public class Item {
         //
     }
 
-    public Item(String name, int price, String category) {
-        this.name = name;
+    public Item(String itemName, int price, String category) {
+        this.itemName = itemName;
         this.price = price;
         this.category = category;
     }
 
-    public String getName() {
-        return name;
+    public String getItemName() {
+        return itemName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
     }
 
     public int getPrice() {
@@ -42,7 +42,7 @@ public class Item {
 
     @Override
     public String toString() {
-        return "Item: " + name + "\n" +
+        return "Item: " + itemName + "\n" +
                 "<br>" +
                 "Price: " + price + "\n" +
                 "<br>" +

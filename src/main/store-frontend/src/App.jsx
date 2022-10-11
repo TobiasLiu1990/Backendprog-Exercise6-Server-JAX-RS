@@ -19,7 +19,7 @@ function ItemList() {
     }
     return <ul>{item.map(i =>
         <div>
-            {i.name} - {i.price}
+            {i.itemName} - {i.price}
             <p></p>
             {i.category}
             <hr></hr>
@@ -28,7 +28,7 @@ function ItemList() {
 }
 
 function AddBook() {
-    const [item, setItem] = useState("");
+    const [itemName, setItemName] = useState("");
     const [price, setPrice] = useState("");
     const [category, setCategory] = useState("");
 
@@ -38,7 +38,7 @@ function AddBook() {
         //Server side fragment
         fetch("/api/items", {
             method: "post",
-            body: JSON.stringify({item, price, category}),
+            body: JSON.stringify({item: itemName, price, category}),
             headers: {
                 "Content-Type": "application/json"
             }
@@ -50,7 +50,7 @@ function AddBook() {
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>Item: </label>
-                    <input type="text" value={item} onChange={e => setItem(e.target.value)}/>
+                    <input type="text" value={itemName} onChange={e => setItemName(e.target.value)}/>
                 </div>
                 <div>
                     <label>Price: </label>

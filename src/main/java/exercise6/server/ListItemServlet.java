@@ -28,7 +28,7 @@ public class ListItemServlet extends HttpServlet {
             Item tempItem = jdbcManager.getItemFromDatabase(i);
 
             result.add(Json.createObjectBuilder()
-                    .add("name", tempItem.getName())
+                    .add("name", tempItem.getItemName())
                     .add("price", tempItem.getPrice())
                     .add("category", tempItem.getCategory())
             );

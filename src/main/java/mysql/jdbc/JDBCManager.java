@@ -25,12 +25,12 @@ public class JDBCManager {
         String query = "INSERT INTO items (item_name, price, category_id) VALUES (?, ?, ?)";
 
         try (PreparedStatement pStmt = conn.prepareStatement(query)) {
-            pStmt.setString(1, item.getName());
+            pStmt.setString(1, item.getItemName());
             pStmt.setInt(2, item.getPrice());
             pStmt.setString(3, item.getCategory());
             pStmt.executeUpdate();
 
-            System.out.println(item.getName() + " added to database");
+            System.out.println(item.getItemName() + " added to database");
         } catch (SQLException e) {
             e.printStackTrace();
         }
