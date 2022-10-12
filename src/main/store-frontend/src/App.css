@@ -12,6 +12,16 @@ label {
   margin-right: 2.5em;
 }
 
+#label-category {
+  transform: translateX(0.1em);
+}
+
+select {
+  width: 13.3em;
+  height: 1.8em;
+  margin: 0.2em;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;

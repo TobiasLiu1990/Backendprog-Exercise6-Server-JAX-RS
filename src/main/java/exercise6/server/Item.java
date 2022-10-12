@@ -43,9 +43,7 @@ public class Item {
     @Override
     public String toString() {
         return "Item: " + itemName + "\n" +
-                "<br>" +
                 "Price: " + price + "\n" +
-                "<br>" +
                 "Category: " + category + "\n";
     }
 }

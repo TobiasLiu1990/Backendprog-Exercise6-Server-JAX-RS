@@ -36,7 +36,7 @@ public class ItemEndPoint {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addItem(String body) throws IOException {
+    public Response addItem(String body) {
         JSONArray jsonArray = new JSONArray("[" + body + "]");
 
         //Bad fix, body.length() is always 36 in this case.
