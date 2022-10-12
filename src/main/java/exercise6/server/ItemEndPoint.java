@@ -5,6 +5,10 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import mysql.jdbc.JDBCManager;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.IOException;
 
 @Path("/items")
 public class ItemEndPoint {
@@ -32,16 +36,29 @@ public class ItemEndPoint {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addItem(String body) {
+    public Response addItem(String body) throws IOException {
+        JSONArray jsonArray = new JSONArray("[" + body + "]");
 
-        var item = new Item();
+        //Bad fix, body.length() is always 36 in this case.
+        if (body.length() > 36) {
+            String itemName = "";
+            int price = 0;
+            String category = "0";
 
-        //Need to find the 3 inputs/parse JSON to String/int then add to db.
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject obj = jsonArray.getJSONObject(i);
 
+                itemName = obj.getString("item");
+                price = obj.getInt("price");            //Need to always receive a number.
+                category = obj.getString("category");   //Need to change to menu that shows options.
+            }
 
-        jdbcManager.addItemToDatabase(item);
-
-
+            var item = new Item(itemName, price, category);
+            System.out.println(item);
+//            jdbcManager.addItemToDatabase(item);
+        } else {
+            return null;
+        }
         return Response.ok().build();
     }
 }
