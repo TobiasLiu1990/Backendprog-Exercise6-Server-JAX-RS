@@ -2,22 +2,17 @@ package exercise6.server;
 
 import jakarta.json.*;
 import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import mysql.jdbc.JDBCManager;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.IOException;
-
 @Path("/items")
 public class ItemEndPoint {
 
-    //    @Inject
     private final JDBCManager jdbcManager = new JDBCManager();
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
     public Response listItems() {
         JsonArrayBuilder result = Json.createArrayBuilder();
         int entries = jdbcManager.countAllEntriesInDatabase();
@@ -35,7 +30,6 @@ public class ItemEndPoint {
     }
 
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
     public Response addItem(String body) {
         JSONArray jsonArray = new JSONArray("[" + body + "]");
 
@@ -55,7 +49,7 @@ public class ItemEndPoint {
 
             var item = new Item(itemName, price, category);
             System.out.println(item);
-//            jdbcManager.addItemToDatabase(item);
+            jdbcManager.addItemToDatabase(item);
         } else {
             return null;
         }
